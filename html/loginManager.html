@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Bootstrap Material Admin</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="robots" content="all,follow">
+	<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+	<link rel="stylesheet" href="/css/style.default.css" id="theme-stylesheet">
+	<link rel="stylesheet" href="/layui/css/layui.css" id="theme-stylesheet">
+</head>
+
+<body>
+	<div class="page login-page">
+		<div class="container d-flex align-items-center">
+			<div class="form-holder has-shadow">
+				<div class="row">
+					<!-- Logo & Information Panel-->
+					<div class="col-lg-6">
+						<div class="info d-flex align-items-center">
+							<div class="content">
+								<div class="logo">
+									<h1>欢迎登录</h1>
+								</div>
+								<p>xxx论坛后台登录</p>
+							</div>
+						</div>
+					</div>
+					<!-- Form Panel    -->
+					<div class="col-lg-6 bg-white">
+						<div class="form d-flex align-items-center">
+							<div class="content">
+								<form class="layui-form" action="">
+									<div class="layui-form-item">
+										<label class="layui-form-label">账号</label>
+										<div class="layui-input-block">
+											<input type="text" name="account" required lay-verify="required"
+												placeholder="请输入账户" autocomplete="off" class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">密码</label>
+										<div class="layui-input-block">
+											<input type="password" name="password" required lay-verify="required"
+												placeholder="请输入密码" autocomplete="off" class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">验证码</label>
+										<div class="layui-input-block">
+											<input type="text" placeholder="请输入验证码" autocomplete="off" id="code"
+												name="code" class="layui-input">
+											<img src="http://localhost:8848/code" onclick="changeCode()" id="codeImg">
+
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<div class="layui-input-block">
+											<button class="layui-btn" lay-submit lay-filter="formDemo">登录</button>
+											<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+										</div>
+									</div>
+								</form>
+								<small>没有账号?</small><a href="register.html" class="signup">&nbsp;注册</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script src="/layui/layui.all.js"></script>
+<script src="/js/loginManager.js"></script>
+
+</html>
