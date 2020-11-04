@@ -1,0 +1,43 @@
+<div style="margin-top: 20px;">
+    <div class="layui-input-inline" style="margin-left:400px">
+        <input type="text" id="uname" lay-verify="title" autocomplete="off" placeholder="昵称" class="layui-input">
+
+    </div>
+    <div class="layui-input-inline">
+        <input type="text" id="phone" lay-verify="title" autocomplete="off" placeholder="电话" class="layui-input">
+    </div>
+    <div class="layui-input-inline">
+        <a class="layui-btn layui-btn-sm " id="search">查询</a>
+    </div>
+</div>
+
+<div>
+    <table id="tabUser" lay-filter="tabUser">
+
+    </table>
+    <div class="layui-tab-item">
+        <div id="pageDemo"></div>
+    </div>
+
+</div>
+
+
+
+<!-- 自定义头工具栏-->
+<script type="text/html" id="headBar">
+<div class="layui-btn-group">
+    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="add">
+        <i class="layui-icon">&#xe654;</i>
+    </button>
+    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delete">
+        <i class="layui-icon">&#xe640;</i>
+    </button>
+</div>
+</script>
+
+<!-- 行工具栏-->
+<script type="text/html" id="toolUser">
+    <a class="layui-btn-danger layui-btn-xs layui-btn" lay-event="delete">删除</a>
+    <a class="layui-btn layui-btn-xs layui-btn" lay-event="update">修改</a>
+</script>
+<script src="/js/user.js"></script>

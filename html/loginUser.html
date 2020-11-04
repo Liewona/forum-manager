@@ -34,6 +34,7 @@
 						<div class="form d-flex align-items-center">
 							<div class="content">
 								<form class="layui-form" action="">
+									<input type="hidden" name="uuid" id="Uuid">
 									<div class="layui-form-item">
 										<label class="layui-form-label">账号</label>
 										<div class="layui-input-block">
@@ -53,7 +54,7 @@
 										<div class="layui-input-block">
 											<input type="text" placeholder="请输入验证码" autocomplete="off" id="code"
 												name="code" class="layui-input">
-											<img src="http://localhost:8848/code" onclick="changeCode()" id="codeImg">
+											<img onclick="changeCode()" id="codeImg">
 
 										</div>
 									</div>
@@ -64,6 +65,7 @@
 										</div>
 									</div>
 								</form>
+								<small>没有账号?</small><a href="register.html" class="signup">&nbsp;注册</a>
 							</div>
 						</div>
 					</div>

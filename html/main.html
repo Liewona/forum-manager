@@ -1,96 +1,87 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<title>Rise公司CRM管理系统</title>
-		<link rel="stylesheet" href="../layui/css/layui.css">
-	</head>
-	<body class="layui-layout-body">
-		<div class="layui-layout layui-layout-admin">
-			<div class="layui-header">
-				<div class="layui-logo">贴吧后台管理</div>
-				<ul class="layui-nav layui-layout-right">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Rise公司CRM管理系统</title>
+	<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header">
+			<div class="layui-logo">贴吧后台管理</div>
+			<ul class="layui-nav layui-layout-right">
+				<li class="layui-nav-item">
+					<a href="javascript:;">
+						<img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+						贤心
+					</a>
+					<dl class="layui-nav-child">
+						<dd><a href="">基本资料</a></dd>
+						<dd><a href="">安全设置</a></dd>
+					</dl>
+				</li>
+				<li class="layui-nav-item"><a href="">退了</a></li>
+			</ul>
+		</div>
+
+		<div class="layui-side layui-bg-black">
+			<div class="layui-side-scroll">
+				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+				<ul class="layui-nav layui-nav-tree" lay-filter="test">
 					<li class="layui-nav-item">
-						<a href="javascript:;">
-							<img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-							贤心
-						</a>
+						<a href="javascript:;" class="crm-menu" crmurl="tieba/tieBa.html">贴吧管理</a>
+
+					</li>
+					<li class="layui-nav-item layui-nav-tree">
+						<a class="crm-menu" crmurl="/html/userManager/userList.html" href="javascript:;">用户管理</a>
+					</li>
+					<li class="layui-nav-item layui-nav-tree">
+						<a class="" href="javascript:;">基础管理</a>
 						<dl class="layui-nav-child">
-							<dd><a href="">基本资料</a></dd>
-							<dd><a href="">安全设置</a></dd>
+							<dd><a class="crm-menu" crmurl="customer/customerlist.html" href="javascript:;">用户管理</a>
+							</dd>
+							<dd><a class="crm-menu" crmurl="customer/customercontact.html" href="javascript:;">权限管理</a>
+							</dd>
+							<dd><a class="crm-menu" crmurl="customer/customercontact.html" href="javascript:;">模块管理</a>
+							</dd>
 						</dl>
 					</li>
-					<li class="layui-nav-item"><a href="">退了</a></li>
+					<li class="layui-nav-item"><a class="crm-menu" crmurl="service/servicelist.html"
+							href="javascript:;">销售管理</a></li>
 				</ul>
 			</div>
-
-			<div class="layui-side layui-bg-black">
-				<div class="layui-side-scroll">
-					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-					<ul class="layui-nav layui-nav-tree" lay-filter="test">
-						<li class="layui-nav-item">
-							<a href="javascript:;" class="crm-menu" crmurl="tieba/tieBa.html">贴吧管理</a>
-							
-						</li>
-						<li class="layui-nav-item layui-nav-tree">
-							<a class="" href="javascript:;">客户管理</a>
-							<dl class="layui-nav-child">
-								<dd><a class="crm-menu" crmurl="customer/customerlist.html" href="javascript:;">客户信息</a></dd>
-								<dd><a class="crm-menu" crmurl="customer/customercontact.html" href="javascript:;">客户联系人</a></dd>
-								<dd><a class="crm-menu" crmurl="customer/customercontact.html" href="javascript:;">客户流失管理</a></dd>
-							</dl>
-						</li>
-						<li class="layui-nav-item"><a class="crm-menu" crmurl="service/servicelist.html" href="javascript:;">服务管理</a></li>
-						<li class="layui-nav-item layui-nav-tree">
-							<a class="" href="javascript:;">统计报表</a>
-							<dl class="layui-nav-child">
-								<dd><a class="crm-menu" crmurl="reportform/amount.html" href="javascript:;">订单总额</a></dd>
-								<dd><a class="crm-menu" crmurl="reportform/countanalyst.html" href="javascript:;">客户构成</a></dd>
-								<dd><a class="crm-menu" crmurl="reportform/serviceanalyst.html" href="javascript:;">服务构成</a></dd>
-								<dd><a class="crm-menu" crmurl="reportform/customerloss.html" href="javascript:;">流失构成</a></dd>
-							</dl>
-						</li>
-						<li class="layui-nav-item"><a class="crm-menu" crmurl="service/servicelist.html" href="javascript:;">数据字典</a></li>
-						<li class="layui-nav-item layui-nav-tree">
-							<a class="" href="javascript:;">系统管理</a>
-							<dl class="layui-nav-child">
-								<dd><a class="crm-menu" crmurl="customer/customerlist.html" href="javascript:;">用户管理</a></dd>
-								<dd><a class="crm-menu" crmurl="customer/customercontact.html" href="javascript:;">权限管理</a></dd>
-								<dd><a class="crm-menu" crmurl="customer/customercontact.html" href="javascript:;">模块管理</a></dd>
-							</dl>
-						</li>
-						<li class="layui-nav-item"><a class="crm-menu" crmurl="service/servicelist.html" href="javascript:;">销售管理</a></li>
-					</ul>
-				</div>
-			</div>
-
-			<div class="layui-body">
-				<!-- 内容主体区域 -->
-				<div id="crm-content" style="padding: 0px;">内容主体区域</div>
-			</div>
-
-			<div class="layui-footer">
-				<!-- 底部固定区域 -->
-				© layui.com - 底部固定区域
-			</div>
 		</div>
-		<script src="../layui/layui.js"></script>
-		<script>
-			//JavaScript代码区域
-			layui.use(['element', 'jquery'], function() {
-				var element = layui.element;
-				var $ = layui.jquery
-				//给菜单添加单击事件
-				$('.crm-menu').click(function() {
-					//jQuery的ajax异步请求，第一个参数是请求的页面；
-					//第二个参数是提交数据；第三个参数是请求成功的回调函数
-					$.get($(this).attr('crmurl'), null, function(obj) {
-						//把请求的页面填充到内容区域
-						$('.layui-body').children(0).html(obj)
-					})
+
+		<div class="layui-body">
+			<!-- 内容主体区域 -->
+			<div id="crm-content" style="padding: 0px;">内容主体区域</div>
+		</div>
+
+		<div class="layui-footer">
+			<!-- 底部固定区域 -->
+			© layui.com - 底部固定区域
+		</div>
+	</div>
+	<script src="../layui/layui.js"></script>
+	<script>
+		//JavaScript代码区域
+		layui.use(['element', 'jquery'], function () {
+			var element = layui.element;
+			var $ = layui.jquery
+			//给菜单添加单击事件
+			$('.crm-menu').click(function () {
+				//jQuery的ajax异步请求，第一个参数是请求的页面；
+				//第二个参数是提交数据；第三个参数是请求成功的回调函数
+				$.get($(this).attr('crmurl'), null, function (obj) {
+					//把请求的页面填充到内容区域
+					$('.layui-body').children(0).html(obj)
 				})
-			});
-		</script>
-	</body>
+			})
+		});
+	</script>
+</body>
+
 </html>

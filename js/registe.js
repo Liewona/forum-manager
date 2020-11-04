@@ -2,11 +2,13 @@ layui.use(['form', 'jquery', 'layer'], function () {
     var form = layui.form;
     var $ = layui.jquery;
     var layer = layui.layer;
-    var password, passwords,account;
+    var password, passwords,account,uname,sex;
     $('#registe').on('click', function () {
         password = $('#password').val()
         passwords = $('#passwords').val()
         account = $('#account').val()
+        uname = $('#uname').val()
+        sex = $("input[type='radio']:checked").val()
         console.log(password + "\t" + passwords);
         if (password != passwords) {
             layer.msg("密码不一致");
@@ -18,13 +20,15 @@ layui.use(['form', 'jquery', 'layer'], function () {
             type: "POST",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({
-                account:account,
-                password:password
+                username:account,
+                password:password,
+                uname:uname,
+                sex:sex
             }),
             success: function (res) {
                 if (res.code == 200) {
                     layer.msg(res.msg);
-                    window.location.href = "/html/loginManager.html";
+                    window.location.href = "/html/loginUser.html";
                 } else {
                     layer.msg(res.msg);
                     console.log(res.msg)

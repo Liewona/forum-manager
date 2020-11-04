@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/layui/css/layui.css" />
+</head>
+
+<body style="padding: 10px;">
+    <!--lay-filter校验-->
+    <form class="layui-form" lay-filter='formUser' action="">
+        <input type="hidden" name="id">
+        <input type="hidden" name="img" id="img">
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" id="man" value="男" title="男">
+                <input type="radio" name="sex" id="women" value="女" title="女" checked>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">头像</label>
+            <div class="layui-input-inline">
+                <img src="" id="imgSrc" name="img" style="width: 150px;height: 150px;" />
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" id="btnUpload">上传图片</button>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="btnEditUser">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <script src="/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+
+        layui.use(['form', 'jquery', 'upload'], function () {
+            var form = layui.form
+            var $ = layui.jquery
+            var upload = layui.upload
+            $('#imgSrc').attr('src', parent.row.img);
+            form.val('formUser', {
+                "id": parent.row.id,
+                "sex": parent.row.sex,
+                "img": parent.row.img
+            })
+
+            //图片上传
+            upload.render({
+                elem: '#btnUpload'
+                , field: "upfile"     //添加这个属性与后台名称保存一致
+                , url: 'http://localhost:8848/up/dis'
+                , accept: 'images' //允许上传的文件类型
+                , acceptMime: 'image/*' //（只显示图片文件）
+                , before: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+
+                        $('#imgSrc').attr('src', result); //图片链接（base64）
+                    });
+                }
+                , done: function (res) {
+                    console.log(res.data)
+                    //如果上传失败
+                    if (res.code > 0) {
+                        return layer.msg('上传失败', { icon: 5, time: 1500 });
+                    } else {
+
+                        document.getElementById('img').value = res.data;
+                        return layer.msg('上传成功', { icon: 1, time: 1500 });
+
+                    }
+
+                }
+                , error: function () {
+                    //演示失败状态，并实现重传
+
+                }
+            });
+
+            form.render()
+            form.on('submit(btnEditUser)', function (data) {
+                if (form.verify()) {
+                    $.ajax({
+                        url: 'http://localhost:8848/user/twoCondition',
+                        type: 'PATCH',
+                        dataType: 'JSON',
+                        contentType: "application/json",
+                        data: JSON.stringify(data.field),
+                        success: function (obj) {
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            layer.msg(obj.msg);
+                            parent.layer.close(index); //再执行关闭   
+                            parent.table.reload('tabUser');
+                        }
+                    })
+                    return false;
+                }
+
+            });
+        })
+    </script>
+</body>
+
+</html>
