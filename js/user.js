@@ -141,7 +141,7 @@ layui.use(['table', 'jquery', 'layer'], function () {
                 layer.open({
                     type: 2 //此处以iframe举例
                         ,
-                    title: '修改客户',
+                    title: '修改用户',
                     area: ['450px', '500px'] //宽高
                         ,
                     shade: 0.5 //阴影（0-1之间的数）

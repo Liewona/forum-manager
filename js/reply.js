@@ -6,10 +6,10 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
     var laydate = layui.laydate
 
     table.render({
-        elem: '#tabComment',
+        elem: '#tabReply',
         height: 460,
-        url: 'http://localhost:8848/comment/',
-        title: '评论管理',
+        url: 'http://localhost:8848/reply/?id='+parent.row.id,
+        title: '评论回复管理',
         page: true //开启分页--会在地址后面自动添加?page=1&limit=10
             ,
         toolbar: '#headBar' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
@@ -24,8 +24,12 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
                     title: 'ID',
                     width: 100
                 }, {
-                    field: 'did',
-                    title: '帖子ID',
+                    field: 'fromId',
+                    title: '回复人',
+                    width: 100
+                },{
+                    field: 'toId',
+                    title: '被回复人',
                     width: 100
                 }, {
                     field: 'content',
@@ -37,8 +41,8 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
                     width: 200,
                     sort: true
                 }, {
-                    field: 'uname',
-                    title: '用户',
+                    field: 'remarkId',
+                    title: '帖子ID',
                     width: 100
                 }, {
                     fixed: 'right',
@@ -51,20 +55,21 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
     });
 
     $("#search").on('click', function () {
-
+        console.log(parent.row.id)
         //执行重载
-        table.reload('tabComment', {
+        table.reload('tabReply', {
             page: {
                 curr: 1 //重新从第 1 页开始
             },
             where: {
                 "content": $("#content").val(),
+                "id":parent.row.id
             },
-            url: "http://localhost:8848/comment/like"
+            url: "http://localhost:8848/reply/like"
         });
     })
 
-    table.on('toolbar(tabComment)', function (obj) {
+    table.on('toolbar(tabReply)', function (obj) {
         var checkStatus = table.checkStatus(obj.config.id),
             data = checkStatus.data; //获取选中的数据
         switch (obj.event) {
@@ -78,14 +83,14 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
                             ids.push(checkStatus.data[i].id)
                         }
                         $.ajax({
-                            url: 'http://localhost:8848/comment/',
+                            url: 'http://localhost:8848/reply/',
                             type: 'DELETE',
                             dataType: 'JSON',
                             contentType: "application/json;charset=utf-8",
                             data: JSON.stringify(ids),
                             success: function (obj) {
                                 layer.msg(obj.msg);
-                                table.reload('tabComment')
+                                table.reload('tabReply')
                             }
                         })
                         layer.close(index);
@@ -96,7 +101,7 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
 
     });
     //监听行事件
-    table.on('tool(tabComment)', function (obj) {
+    table.on('tool(tabReply)', function (obj) {
         var layEvent = obj.event;
         var data = obj.data;
         switch (obj.event) {
@@ -106,39 +111,25 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
                     ids.push(data.id)
                     console.log(ids[0])
                     $.ajax({
-                        url: 'http://localhost:8848/comment/',
+                        url: 'http://localhost:8848/reply/',
                         type: 'DELETE',
                         dataType: 'JSON',
                         contentType: "application/json;charset=utf-8",
                         data: JSON.stringify(ids),
                         success: function (obj) {
                             layer.msg(obj.msg);
-                            table.reload('tabComment')
+                            table.reload('tabReply')
                         }
                     })
                     layer.close(index);
                 });
-                break;
-            case 'look':
-                row = data
-                layer.open({
-                    type:2,
-                    title:'该贴回复信息',
-                    area: ['1050px', '700px'], //宽高
-                    maxmin: true, //最大、最小化按钮
-                    shade: 0.5, //阴影（0-1之间的数）
-                    offset: [ //设置窗口位置
-                        ($(window).height() - 700) / 2, ($(window).width() - 1050) / 2
-                    ],
-                    content:'/html/comment/CommentReply.html'
-                })
                 break;
         };
     });
 
     //在线编辑
     //监听单元格编辑
-    table.on('edit(tabComment)', function (obj) {
+    table.on('edit(tabReply)', function (obj) {
 
         var value = obj.value //得到修改后的值
             ,
@@ -147,7 +138,7 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
             field = obj.field; //得到字段
         $.ajax({
             type: "PATCH",
-            url: "http://localhost:8848/comment/",
+            url: "http://localhost:8848/reply/",
             dataType: 'json',
             contentType: "application/json",
             data: JSON.stringify({
@@ -158,7 +149,9 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
             success: function (res) {
                 layer.msg(res.msg)
             }
+
         })
+
     });
 
     laydate.render({
@@ -173,14 +166,15 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
     $("#timesearch").on('click', function () {
         console.log($("#time").val())
         //执行重载
-        table.reload('tabComment', {
+        table.reload('tabReply', {
             page: {
                 curr: 1 //重新从第 1 页开始
             },
             where: {
-                "time": $("#time").val()
+                "time": $("#time").val(),
+                "id":parent.row.id
             },
-            url: "http://localhost:8848/comment/time"
+            url: "http://localhost:8848/reply/time"
         });
     })
 });
