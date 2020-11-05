@@ -2,6 +2,11 @@ layui.use(['form', 'jquery', 'layer'], function () {
     var form = layui.form;
     var $ = layui.jquery;
     var layer = layui.layer;
+    $.ajaxSetup({
+        xhrFields: {
+            withCredentials: true
+        }
+    });
     var password, passwords,account,uname,sex;
     $('#registe').on('click', function () {
         password = $('#password').val()
@@ -19,6 +24,10 @@ layui.use(['form', 'jquery', 'layer'], function () {
             dataType: "JSON",
             type: "POST",
             contentType: "application/json;charset=utf-8",
+            xhrFields:{
+                withCredentials:true
+            },
+            crossDomain: true,
             data: JSON.stringify({
                 username:account,
                 password:password,

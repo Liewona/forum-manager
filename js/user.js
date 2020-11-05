@@ -3,11 +3,19 @@ layui.use(['table', 'jquery', 'layer'], function () {
     table = layui.table;
     var $ = layui.jquery
     var layer = layui.layer
-
+    $.ajaxSetup({
+        xhrFields: {
+            withCredentials: true
+        }
+    });
     table.render({
         elem: '#tabUser',
         height: 460,
         url: 'http://localhost:8848/user/',
+        xhrFields:{
+            withCredentials:true
+        },
+        crossDomain: true,
         title: '用户管理',
         page: true //开启分页--会在地址后面自动添加?page=1&limit=10
             ,
@@ -68,7 +76,11 @@ layui.use(['table', 'jquery', 'layer'], function () {
                 "uname": $("#uname").val(),
                 "phone": $("#phone").val()
             },
-            url: "http://localhost:8848/user/like"
+            url: "http://localhost:8848/user/like",
+            xhrFields:{
+                withCredentials:true
+            },
+            crossDomain: true,
         });
     })
 
@@ -97,6 +109,10 @@ layui.use(['table', 'jquery', 'layer'], function () {
                             url: 'http://localhost:8848/user/',
                             type: 'DELETE',
                             dataType: 'JSON',
+                            xhrFields:{
+                                withCredentials:true
+                            },
+                            crossDomain: true,
                             contentType: "application/json;charset=utf-8",
                             data: JSON.stringify(ids),
                             success: function (obj) {
@@ -126,6 +142,10 @@ layui.use(['table', 'jquery', 'layer'], function () {
                         url: 'http://localhost:8848/user/',
                         type: 'DELETE',
                         dataType: 'JSON',
+                        xhrFields:{
+                            withCredentials:true
+                        },
+                        crossDomain: true,
                         contentType: "application/json;charset=utf-8",
                         data: JSON.stringify(ids),
                         success: function (obj) {
@@ -169,6 +189,10 @@ layui.use(['table', 'jquery', 'layer'], function () {
                     type: "PATCH",
                     url: "http://localhost:8848/user/",
                     dataType: 'json',
+                    xhrFields:{
+                        withCredentials:true
+                    },
+                    crossDomain: true,
                     contentType: "application/json",
                     data: JSON.stringify({
                         "val": value,

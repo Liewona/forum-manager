@@ -4,7 +4,11 @@ layui.use(['form', 'jquery', 'layer'], function () {
     var form = layui.form;
     var $ = layui.jquery
     var layer = layui.layer
-
+    $.ajaxSetup({
+        xhrFields: {
+            withCredentials: true
+        }
+    });
     //监听提交
     form.on('submit(formDemo)', function (data) {
         $.ajax({

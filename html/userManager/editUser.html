@@ -47,6 +47,12 @@
             var form = layui.form
             var $ = layui.jquery
             var upload = layui.upload
+
+            $.ajaxSetup({
+                xhrFields: {
+                    withCredentials: true
+                }
+            });
             $('#imgSrc').attr('src', parent.row.img);
             form.val('formUser', {
                 "id": parent.row.id,
@@ -94,6 +100,10 @@
                         url: 'http://localhost:8848/user/twoCondition',
                         type: 'PATCH',
                         dataType: 'JSON',
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
                         contentType: "application/json",
                         data: JSON.stringify(data.field),
                         success: function (obj) {

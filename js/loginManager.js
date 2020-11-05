@@ -5,12 +5,16 @@ layui.use(['form', 'jquery', 'layer'], function () {
     var form = layui.form;
     var $ = layui.jquery
     var layer = layui.layer
-
+    $.ajaxSetup({
+        xhrFields: {
+            withCredentials: true
+        }
+    });
 
     //监听提交
     form.on('submit(formDemo)', function (data) {
         $.ajax({
-            url: 'http://localhost:8848/manger',
+            url: 'http://localhost:8848/loginManager',
             type: 'GET',
             dataType: 'JSON',
             xhrFields:{
@@ -22,6 +26,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
             success: function (res) {
                 if(res.code == 200){
                     layer.msg(res.msg)
+                    sessionStorage.setItem("account",data.field.account)
                     window.location.href = "main.html";
                 }else{
                     layer.msg(res.msg,{icon:2},function () {

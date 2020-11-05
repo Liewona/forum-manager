@@ -6,7 +6,48 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<title>Rise公司CRM管理系统</title>
 	<link rel="stylesheet" href="../layui/css/layui.css">
+	<script src="../layui/layui.js"></script>
+	<script>
+		
+		if (sessionStorage.getItem("account") == null || sessionStorage.getItem("account") == '') {
+			window.alert('未登录，现转到登录界面')
+			window.location.href = '/html/loginManager.html '
+		}
+		console.log(sessionStorage.getItem("account"))
+		var name;
+		layui.use(['jquery'], function () {
+			var $ = layui.jquery
+			$.ajaxSetup({
+                xhrFields: {
+                    withCredentials: true
+                }
+            });
+			$.ajax({
+				type: 'GET',
+				url: 'http://localhost:8848/manager',
+				dataType: 'JSON',
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				data: {
+					'account': sessionStorage.getItem("account")
+				},
+				success: function (res) {
+					name = res.data.name;
+					if (name === null || name === '') {
+						console.log(name)
+						window.alert('未登录，现转到登录界面')
+						window.location.href = '/html/loginManager.html '
+					}
+					document.getElementById('name').innerText = name;
+					console.log(name)
+				}
+			})
+		})
+	</script>
 </head>
+
 
 <body class="layui-layout-body">
 	<div class="layui-layout layui-layout-admin">
@@ -16,14 +57,16 @@
 				<li class="layui-nav-item">
 					<a href="javascript:;">
 						<img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-						贤心
+						<span id="name"></span>
 					</a>
 					<dl class="layui-nav-child">
 						<dd><a href="">基本资料</a></dd>
 						<dd><a href="">安全设置</a></dd>
 					</dl>
 				</li>
-				<li class="layui-nav-item"><a href="">退了</a></li>
+				<li class="layui-nav-item"><a href="#">
+						<div id="exit">退了</div>
+					</a></li>
 			</ul>
 		</div>
 
@@ -40,7 +83,7 @@
 					</li>
 					<li class="layui-nav-item ">
 						<a class="crm-menu" crmurl="/html/comment/commentManage.html" href="javascript:;">评论管理</a>
-						
+
 					</li>
 					<li class="layui-nav-item"><a class="crm-menu" crmurl="service/servicelist.html"
 							href="javascript:;">销售管理</a></li>
@@ -58,12 +101,13 @@
 			© layui.com - 底部固定区域
 		</div>
 	</div>
-	<script src="../layui/layui.js"></script>
+
 	<script>
 		//JavaScript代码区域
 		layui.use(['element', 'jquery'], function () {
 			var element = layui.element;
 			var $ = layui.jquery
+
 			//给菜单添加单击事件
 			$('.crm-menu').click(function () {
 				//jQuery的ajax异步请求，第一个参数是请求的页面；
@@ -72,6 +116,10 @@
 					//把请求的页面填充到内容区域
 					$('.layui-body').children(0).html(obj)
 				})
+			})
+			$('#exit').on('click', function () {
+				sessionStorage.removeItem('account')
+				window.location.href = "/html/loginManager.html"
 			})
 		});
 	</script>

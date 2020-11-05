@@ -4,11 +4,19 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
     var $ = layui.jquery
     var layer = layui.layer
     var laydate = layui.laydate
-
+    $.ajaxSetup({
+        xhrFields: {
+            withCredentials: true
+        }
+    });
     table.render({
         elem: '#tabComment',
         height: 460,
         url: 'http://localhost:8848/comment/',
+        xhrFields:{
+            withCredentials:true
+        },
+        crossDomain: true,
         title: '评论管理',
         page: true //开启分页--会在地址后面自动添加?page=1&limit=10
             ,
@@ -60,6 +68,10 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
             where: {
                 "content": $("#content").val(),
             },
+            xhrFields:{
+                withCredentials:true
+            },
+            crossDomain: true,
             url: "http://localhost:8848/comment/like"
         });
     })
@@ -81,6 +93,10 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
                             url: 'http://localhost:8848/comment/',
                             type: 'DELETE',
                             dataType: 'JSON',
+                            xhrFields:{
+                                withCredentials:true
+                            },
+                            crossDomain: true,
                             contentType: "application/json;charset=utf-8",
                             data: JSON.stringify(ids),
                             success: function (obj) {
@@ -109,6 +125,10 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
                         url: 'http://localhost:8848/comment/',
                         type: 'DELETE',
                         dataType: 'JSON',
+                        xhrFields:{
+                            withCredentials:true
+                        },
+                        crossDomain: true,
                         contentType: "application/json;charset=utf-8",
                         data: JSON.stringify(ids),
                         success: function (obj) {
@@ -149,6 +169,10 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
             type: "PATCH",
             url: "http://localhost:8848/comment/",
             dataType: 'json',
+            xhrFields:{
+                withCredentials:true
+            },
+            crossDomain: true,
             contentType: "application/json",
             data: JSON.stringify({
                 "val": value,
@@ -180,6 +204,10 @@ layui.use(['table', 'jquery', 'layer', 'laydate'], function () {
             where: {
                 "time": $("#time").val()
             },
+            xhrFields:{
+                withCredentials:true
+            },
+            crossDomain: true,
             url: "http://localhost:8848/comment/time"
         });
     })
