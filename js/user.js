@@ -50,13 +50,15 @@ layui.use(['table', 'jquery', 'layer'], function () {
                     field: 'sex',
                     title: '性别',
                     //edit: 'text'
-                }, {
+                }, 
+                {
                     field: 'img',
                     title: '头像',
                     templet: function (res) {
                         return '<img src="' + res.img + '"class="layui-nav-img">'
                     }
-                }, {
+                }, 
+                {
                     fixed: 'right',
                     width: 165,
                     align: 'center',
