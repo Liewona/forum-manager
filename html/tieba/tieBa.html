@@ -1,3 +1,53 @@
+<style>
+	/* table 样式 */
+	
+	table {
+	  border-top: 1px solid #ccc;
+	  border-left: 1px solid #ccc;
+	}
+	table td,
+	table th {
+	  border-bottom: 1px solid #ccc;
+	  border-right: 1px solid #ccc;
+	  padding: 3px 5px;
+	}
+	table th {
+	  border-bottom: 2px solid #ccc;
+	  text-align: center;
+	}
+	
+	/* blockquote 样式 */
+	blockquote {
+	  display: block;
+	  border-left: 8px solid #d0e5f2;
+	  padding: 5px 10px;
+	  margin: 10px 0;
+	  line-height: 1.4;
+	  font-size: 100%;
+	  background-color: #f1f1f1;
+	}
+	
+	/* code 样式 */
+	code {
+	  display: inline-block;
+	  *display: inline;
+	  *zoom: 1;
+	  background-color: #f1f1f1;
+	  border-radius: 3px;
+	  padding: 3px 5px;
+	  margin: 0 3px;
+	}
+	pre code {
+	  display: block;
+	}
+	
+	/* ul ol 样式 */
+	ul, ol {
+	  margin: 10px 0 10px 20px;
+	}
+	
+</style>
+
 <div style="height: 100%;">
 	<table id="tab" lay-filter="tab">
 	</table>
@@ -11,7 +61,7 @@
 </script>
 <script type="text/html" id="barTB">
   <a class="layui-btn layui-btn-xs" lay-event="edit">查看</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" id="delet">删除</a>
+ 
 	
 </script>
 <script>
@@ -48,32 +98,30 @@ layui.use(['table','jquery'], function(){
   
   //监听事件
   table.on('tool(tab)', function(obj){
-    var checkStatus = table.checkStatus(obj.config.id);
+   // var checkStatus = table.checkStatus(obj.config.id);
     switch(obj.event){
       
-      case 'del':		
-		layer.confirm('确认要删除选中的这行吗？', function(index){
-			console.log(obj.data);
-		    var ids = [];
+  //     case 'del':		
+		// layer.confirm('确认要删除选中的这行吗？', function(index){
+			
+		//     var ids = [obj.data.id];
+		//   console.log(ids);	  
+		//   $.ajax({
+		// 	  url:"http://localhost:8848/tbDiscuss/deleteById",
+		// 	  type:'DELETE',
+		// 	  dataType:'JSON',
+		// 	  contentType:'application/json',
+		// 	  data:{JSON.stringify(ids)
+		// 		  },
+		// 	  success:function(obj){
+		// 		  layer.msg(obj.msg);
+		// 		  table.reload('tabCustomer')
+		// 	  }
+		//   })
 		  
-		  
-		  $.ajax({
-			  url:"http://localhost:8848/tbDiscuss/deleteById",
-			  type:'DELETE',
-			  dataType:'JSON',
-			  data:{
-				  ids:ids
-			  },
-			  success:function(obj){
-				  layer.msg(obj.msg);
-				  table.reload('tabCustomer')
-			  }
-		  })
-		  
-		  layer.close(index);
-		});       
-
-      break;
+		//   layer.close(index);
+		// });       
+  //       break;
      
 	  case 'search':
 		table.reload('tab',{
@@ -83,8 +131,25 @@ layui.use(['table','jquery'], function(){
 			page:{
 				curr:1
 			}
-		})
-	  break;
+		});
+	   break;
+	  
+	  case 'edit':
+	        layer.open({
+	               type: 1
+				   ,area: ['500px', '300px']
+	               ,offset: 'auto' //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+	               ,id: 'layerDemo' //防止重复弹出
+	               ,content: obj.data.content
+	               ,btn: '关闭全部'
+	               ,btnAlign: 'c' //按钮居中
+	               ,shade: 0 //不显示遮罩
+	               ,yes: function(){
+	                 layer.closeAll();
+	               }
+	             });
+	 
+	  
     };
   });
   
@@ -130,8 +195,13 @@ layui.use(['table','jquery'], function(){
   					  data:JSON.stringify(ids),
                       success:function(res){
                           layer.msg(res.msg);
-  
-                          window.location.reload();
+                         // window.location.reload();
+						that.table.reload('tab',{
+							 where:{},
+							 page:{
+								 curr:1
+							 }
+						 });
                       }
   
   				});
