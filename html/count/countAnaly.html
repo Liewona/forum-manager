@@ -1,0 +1,205 @@
+<div style="width: 100%;height: 100%;padding-left: 10%;padding-top: 5%;">
+	<div style="width: 100%;height: 50%;">
+		<div id="pie1" style="width: 40%;height: 90%;float: left;">
+        </div>
+		<div id="pie2" style="width: 40%;height: 90%;float: left;"></div>
+	</div>
+
+    <div style="width: 100%;height: 50%;">
+		<div id="echart" style="width: 40%;height: 90%;float: left;">
+         </div>
+		 <div id="echart2" style="width: 40%;height: 90%;float: left;">
+		  </div>
+	</div>
+
+</div>
+<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+<script  type="text/javascript">
+	var data=[];
+	
+	layui.use(['jquery'],function(){
+		var $=layui.jquery;
+	    const that=this;
+		var myChart=echarts.init(document.getElementById('echart'));	
+		var pie=echarts.init(document.getElementById('pie1'));
+		var myChart1=echarts.init(document.getElementById('echart2'));
+		var pie1=echarts.init(document.getElementById('pie2'));
+		
+		$.ajax({
+		      type:"POST",
+		      url:"http://localhost:8848/tbDiscuss/getRecentlyTb",
+		      dataType:'json',
+		      contentType:"application/json",		 
+		      success:function(res){
+				  console.log(res.data);
+		          var data=res.data;
+				  
+				  //柱状图
+				  var option = {
+				             title: {		
+				                 text: '上周每日发帖量'
+								  
+				             },		
+				             tooltip: {},		
+				             legend: {		
+				                 data:['发布量']
+										
+				             },		
+				             xAxis: {		
+				                 data: [data[0][0],data[1][0],data[2][0],data[3][0],data[4][0],data[5][0],data[6][0]]	
+				             },		
+				             yAxis: {},		
+				             series: [{		
+				                 name: '发布量',		
+				                 type: 'bar',		
+				                 data: [data[0][1],data[1][1],data[2][1],data[3][1],data[4][1],data[5][1],data[6][1]]		
+				             }],																						
+				         };		
+						 
+						 myChart.setOption(option);
+						 
+						 //饼状图
+						 var optionpie= {
+						     title: {
+						         text: '每日发帖比例',
+						         
+						         left: 'center'
+						     },
+						     tooltip: {
+						         trigger: 'item',
+						         formatter: '{a} <br/>{b} : {c} ({d}%)'
+						     },
+						     legend: {
+						         orient: 'vertical',
+						         left: 'left',
+						         data: [data[0][0],data[1][0],data[2][0],data[3][0],data[4][0],data[5][0],data[6][0]]
+						     },
+						     series: [
+						         {
+						             name: '发帖比例',
+						             type: 'pie',
+						             radius: '55%',
+						             center: ['50%', '60%'],
+						             data: [
+						                 {value: data[0][1], name: data[0][0]},
+						                 {value: data[1][1], name: data[1][0]},
+						                 {value: data[2][1], name: data[2][0]},
+						                 {value: data[3][1], name: data[3][0]},
+						                 {value: data[4][1], name: data[4][0]},
+										 {value: data[5][1], name: data[5][0]},
+										 {value: data[6][1], name: data[6][0]}
+						             ],
+						             emphasis: {
+						                 itemStyle: {
+						                     shadowBlur: 10,
+						                     shadowOffsetX: 0,
+						                     shadowColor: 'rgba(0, 0, 0, 0.5)'
+						                 }
+						             }
+						         }
+						     ]
+						 };					 
+						 pie.setOption(optionpie);						 
+		      }		  
+		});
+		
+		//
+		$.ajax({
+		      type:"POST",
+		      url:"http://localhost:8848/tbDiscuss/selectFive",
+		      dataType:'json',
+		      contentType:"application/json",		 
+		      success:function(res){
+				  console.log(res.data);
+		          var data=res.data;
+				  
+				  //柱状图
+				  var option = {
+				             title: {		
+				                 text: '浏览量前五帖子'
+				  								  
+				             },		
+				             tooltip: {},		
+				             legend: {		
+				                 data:['发布量']
+				  										
+				             },		
+				             xAxis: {		
+				                 data: [data[0].id,data[1].id,data[2].id,data[3].id,data[4].id]	
+				             },		
+				             yAxis: {},		
+				             series: [{		
+				                 name: '发布量',		
+				                 type: 'bar',		
+				                 data: [data[0].clickCount,data[1].clickCount,data[2].clickCount,data[3].clickCount,data[4].clickCount]		
+				             }],																						
+				         };		
+				  						 
+				  						 myChart1.setOption(option);
+				  						 
+				  						 //饼状图
+				  						 var optionpie= {
+				  						     title: {
+				  						         text: '浏览量前五比例',
+				  						         
+				  						         left: 'center'
+				  						     },
+				  						     tooltip: {
+				  						         trigger: 'item',
+				  						         formatter: '{a} <br/>{b} : {c} ({d}%)'
+				  						     },
+				  						     legend: {
+				  						         orient: 'vertical',
+				  						         left: 'left',
+				  						         data: [data[0].id,data[1].id,data[2].id,data[3].id,data[4].id]
+				  						     },
+				  						     series: [
+				  						         {
+				  						             name: '发帖比例',
+				  						             type: 'pie',
+				  						             radius: '55%',
+				  						             center: ['50%', '60%'],
+				  						             data: [
+				  						                 {value: data[0].clickCount, name: data[0].id},
+				  						                 {value: data[1].clickCount, name: data[1].id},
+				  						                 {value: data[2].clickCount, name: data[2].id},
+				  						                 {value: data[3].clickCount, name: data[3].id},
+				  						                 {value: data[4].clickCount, name: data[4].id},
+				  										 
+				  						             ],
+				  						             emphasis: {
+				  						                 itemStyle: {
+				  						                     shadowBlur: 10,
+				  						                     shadowOffsetX: 0,
+				  						                     shadowColor: 'rgba(0, 0, 0, 0.5)'
+				  						                 }
+				  						             }
+				  						         }
+				  						     ]
+				  						 };					 
+				  						 pie1.setOption(optionpie);						
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  }
+				  });
+		
+	});
+	
+	
+	
+	
+	
+	
+
+
+	
+	
+	
+</script>
